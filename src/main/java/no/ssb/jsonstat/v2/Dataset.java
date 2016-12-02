@@ -38,6 +38,7 @@ public class Dataset extends JsonStat {
     private Instant updated = null;
     private Map<String, Dimension> dimension;
     private List<Number> value;
+    private ImmutableMap extension = null;
 
     protected Dataset(ImmutableSet<String> id, ImmutableList<Integer> size) {
         super(Version.TWO, Class.DATASET);
@@ -83,6 +84,10 @@ public class Dataset extends JsonStat {
         // Cannot be empty. Should retain order.
         // Should be same order and size than id.
         return size;
+    }
+
+    public Optional<ImmutableMap> getExtension() {
+      return Optional.ofNullable(extension);
     }
 
     /**
@@ -280,6 +285,7 @@ public class Dataset extends JsonStat {
 
         private final ImmutableSet.Builder<Dimension.Builder> dimensionBuilders;
         private final ImmutableList.Builder<Optional<Number>> values;
+        private final ImmutableMap.Builder extension;
         private String label;
         private String source;
         private Instant update;
@@ -287,6 +293,7 @@ public class Dataset extends JsonStat {
         private Builder() {
             this.dimensionBuilders = ImmutableSet.builder();
             this.values = ImmutableList.builder();
+            this.extension = ImmutableMap.builder();
         }
 
         public Builder withLabel(final String label) {
@@ -304,9 +311,13 @@ public class Dataset extends JsonStat {
             return this;
         }
 
+        public Builder withExtension(ImmutableMap extension) {
+            this.extension.putAll(extension);
+            return this;
+        }
+
         public Builder withDimension(Dimension.Builder dimension) {
             checkNotNull(dimension, "the dimension builder was null");
-
 
             if (dimensionBuilders.build().contains(dimension))
                 throw new DuplicateDimensionException(
@@ -338,6 +349,10 @@ public class Dataset extends JsonStat {
             dataset.updated = update;
             dataset.value = values.build().stream().map(number -> number.isPresent() ? number.get() : null).collect(Collectors.toList());
             dataset.dimension = dimensionMap;
+
+            // ImmutableMap.Builder has no way to check the size of the map to be built.
+            ImmutableMap builtExtension = this.extension.build();
+            dataset.extension = (builtExtension.size() > 0) ? builtExtension : null;
 
             return dataset;
         }

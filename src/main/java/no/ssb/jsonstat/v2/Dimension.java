@@ -16,14 +16,13 @@ import java.util.function.Function;
  * Created by hadrien on 07/06/16.
  * https://json-stat.org/format/#dimension
  */
-public class Dimension extends JsonStat {
+public class Dimension {
 
     private final Category category;
     // https://json-stat.org/format/#label
     private String label;
 
     public Dimension(Category category) {
-        super(Version.TWO, Class.DIMENSION);
         this.category = category;
     }
 
@@ -206,6 +205,11 @@ public class Dimension extends JsonStat {
                     );
             return withIndexedLabels(ImmutableMap.copyOf(newIndexedLabels));
 
+        }
+
+        public Builder withIndex(ImmutableSet<String> index) {
+          this.index.addAll(index);
+          return this;
         }
 
         /**

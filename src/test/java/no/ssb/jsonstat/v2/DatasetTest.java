@@ -142,6 +142,8 @@ public class DatasetTest {
                         "T", "population 15 years old and over"
                 )));
 
+        builder.withExtension(ImmutableMap.of("arbitrary_field", "arbitrary_value"));
+
         // TODO: addDimension("name") returning Dimension.Builder? Super fluent?
         // TODO: How to ensure valid data with the geo builder? Add the type first and extend builders?
         // TODO: express hierarchy with the builder? Check how ES did that with the query builders.
@@ -168,7 +170,6 @@ public class DatasetTest {
         Dataset build = builder.withValues(collect).build();
 
         assertThat(build).isNotNull();
-
     }
 
     @Test
