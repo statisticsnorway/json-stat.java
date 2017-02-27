@@ -4,6 +4,8 @@ Implementation of JSON Stat in Java - http://json-stat.org
 Status
 ======
 
+[![Join the chat at https://gitter.im/json-stat-java/Lobby](https://badges.gitter.im/json-stat-java/Lobby.svg)](https://gitter.im/json-stat-java/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/statisticsnorway/json-stat.java.svg?branch=master)](https://travis-ci.org/statisticsnorway/json-stat.java)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/no.ssb.jsonstat/json-stat-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/no.ssb.jsonstat/json-stat-java)
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/no.ssb.jsonstat/json-stat-java/badge.svg)](http://www.javadoc.io/doc/no.ssb.jsonstat/json-stat-java)
