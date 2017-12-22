@@ -28,11 +28,9 @@ import com.google.common.collect.Lists;
 import no.ssb.jsonstat.JsonStatModule;
 import no.ssb.jsonstat.v2.DatasetBuildable;
 import org.assertj.core.api.SoftAssertions;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import org.junit.Test;
 
 import java.net.URL;
-import java.util.Collections;
 import java.util.List;
 
 import static com.google.common.collect.Lists.cartesianProduct;
@@ -52,9 +50,7 @@ public class DatasetDeserializerTest {
         return Lists.newArrayList(Iterables.concat(lists));
     }
 
-    @DataProvider(name = "dates")
-    public Object[][] getValidDates() {
-
+    public static Iterable<String> ecmaDates() {
         List<String> time = asList("T00:00", "T00:00:00");
         List<String> offset = asList("", "Z", "+00:00", "-00:00");
         List<String> dateTime = Lists.newArrayList(
@@ -64,17 +60,13 @@ public class DatasetDeserializerTest {
                 )
         );
 
-        List<String> formats = join(
+        return join(
                 cartesianProduct(
                         asList("2000", "2000-01", "2000-01-01"),
                         Lists.newArrayList(dateTime))
         );
-
-        return Lists.transform(formats, input -> Collections.singleton(input).toArray()).toArray(new Object[0][]);
     }
 
-
-    @Test(dataProvider = "dates")
     public void testParseUpdated(String date) throws Exception {
         // Only check that we handle for now.
         ds.parseEcmaDate(date);
@@ -119,7 +111,7 @@ public class DatasetDeserializerTest {
         mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new JsonStatModule());
 
-        URL resource = getResource(getClass(),"dimOrder.json");
+        URL resource = getResource(getClass(), "dimOrder.json");
 
         JsonParser jsonParser = mapper.getFactory().createParser(resource.openStream());
         jsonParser.nextValue();

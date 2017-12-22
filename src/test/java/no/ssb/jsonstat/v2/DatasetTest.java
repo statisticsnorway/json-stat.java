@@ -26,26 +26,28 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import no.ssb.jsonstat.JsonStatModule;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-import java.util.Collection;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static com.google.common.collect.Lists.cartesianProduct;
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.fail;
 
 public class DatasetTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
 
         mapper.registerModule(new JsonStatModule());
@@ -54,60 +56,52 @@ public class DatasetTest {
         mapper.registerModule(new GuavaModule().configureAbsentsAsNulls(false));
     }
 
-    @Test(enabled = false)
     public void testNeedAtLeastOneDimension() throws Exception {
         fail("TODO");
     }
 
-    @Test(enabled = false)
     public void testNeedAtLeastOneMetric() throws Exception {
         fail("TODO");
     }
 
-    @Test(
-            expectedExceptions = DuplicateDimensionException.class,
-            expectedExceptionsMessageRegExp = ".*duplicatedimension.*"
-    )
+    @Test()
     public void testFailIfDuplicateDimension() throws Exception {
-
-        Dataset.create("Test dataset")
-                .withDimensions(
-                        Dimension.create("duplicatedimension"),
-                        Dimension.create("duplicatedimension")
-                );
-
+        assertThatThrownBy(() -> {
+            Dataset.create("Test dataset")
+                    .withDimensions(
+                            Dimension.create("duplicatedimension"),
+                            Dimension.create("duplicatedimension")
+                    );
+        }).isInstanceOf(DuplicateDimensionException.class)
+                .hasMessageContaining("duplicatedimension");
     }
 
-    @Test(
-            expectedExceptions = NullPointerException.class,
-            expectedExceptionsMessageRegExp = ".*dimension builder.*"
-    )
+    @Test()
     public void testFailIfDimensionIsNull() throws Exception {
-        Dataset.create().withDimensions((Dimension.Builder[]) null);
+        assertThatThrownBy(() -> Dataset.create().withDimensions((Dimension.Builder[]) null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("dimension builder");
     }
 
-    @Test(
-            expectedExceptions = NullPointerException.class,
-            expectedExceptionsMessageRegExp = ".*label.*"
-    )
+    @Test()
     public void testFailIfLabelIsNull() throws Exception {
-        Dataset.create().withLabel(null);
+        assertThatThrownBy(() -> Dataset.create().withLabel(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("label");
     }
 
-    @Test(
-            expectedExceptions = NullPointerException.class,
-            expectedExceptionsMessageRegExp = ".*source.*"
-    )
+    @Test()
     public void testFailIfSourceIsNull() throws Exception {
-        Dataset.create().withSource(null);
+        assertThatThrownBy(() -> Dataset.create().withSource(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("source");
     }
 
-    @Test(
-            expectedExceptions = NullPointerException.class,
-            expectedExceptionsMessageRegExp = ".*update.*"
-    )
+    @Test()
     public void testFailIfUpdateIsNull() throws Exception {
-        Dataset.create().updatedAt(null);
+        assertThatThrownBy(() -> Dataset.create().updatedAt(null))
+                .isInstanceOf(NullPointerException.class)
+                .hasMessageContaining("update");
     }
 
     @Test
@@ -258,14 +252,39 @@ public class DatasetTest {
 
     }
 
-    @Test(enabled = false)
-    public void testLessMetricsInTheMapper() throws Exception {
-        fail("TODO");
-    }
+    @Test
+    public void testExtension() throws Exception {
 
-    @Test(enabled = false)
-    public void testNullsInValuesIsOk() throws Exception {
-        fail("TODO");
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.registerModule(new JsonStatModule());
+        mapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        mapper.registerModule(new GuavaModule().configureAbsentsAsNulls(false));
+
+        DatasetBuilder builder = Dataset.create()
+                .withLabel("Testing")
+                .withSource("This is the source");
+
+        Dataset dataset = builder
+                .withExtension(ImmutableMap.<String, String>of("extensionKey", "extensionValue"))
+                .withDimensions(
+                        Dimension.create("Measures")
+                                .withLabel("Measures")
+                                .withMetricRole()
+                                .withCategories("Count", "Sum"),
+                        Dimension.create("Time").withLabel("Year").withTimeRole().withCategories("2001", "2002", "2003"),
+                        Dimension.create("Geography").withLabel("Geography").withCategories("Chile", "Argentina", "Uruguay", "Brasil")
+                )
+                .withValues(Arrays.asList(new Number[] {1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12}))
+
+                .build();
+
+        String value = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(dataset);
+
+        assertThat(value).contains("extensionKey");
+        assertThat(value).contains("extensionValue");
+
     }
 
     @Test
@@ -327,11 +346,6 @@ public class DatasetTest {
         String value = mapper.writeValueAsString(dataset);
 
         assertThat(value).isNotNull();
-
-    }
-
-    @Test(enabled = false)
-    public void testDeserialize() throws Exception {
 
     }
 

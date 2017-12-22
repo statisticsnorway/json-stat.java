@@ -27,8 +27,8 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.collect.Iterables;
 import com.google.common.io.Resources;
 import no.ssb.jsonstat.JsonStatModule;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.BufferedInputStream;
 import java.net.URL;
@@ -44,7 +44,7 @@ public class DatasetDeserializationTest {
 
     private ObjectMapper mapper;
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
         mapper = new ObjectMapper();
         mapper.registerModule(new GuavaModule());
@@ -110,7 +110,7 @@ public class DatasetDeserializationTest {
 
     }
 
-    @Test(enabled = true)
+    @Test
     public void testDatasetDeserializationWith1DimensionOrderValuesCorrectly() throws Exception  {
 
         URL test = Resources.getResource(getClass(), "./json-stat-1-dimension.json");

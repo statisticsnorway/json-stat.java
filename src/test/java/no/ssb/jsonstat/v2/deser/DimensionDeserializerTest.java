@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import no.ssb.jsonstat.v2.Dimension;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.IOException;
 
@@ -37,7 +37,7 @@ public class DimensionDeserializerTest {
     private ObjectMapper mapper;
     private DimensionDeserializer deserializer;
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
         mapper = new ObjectMapper();
         deserializer = spy(new DimensionDeserializer());

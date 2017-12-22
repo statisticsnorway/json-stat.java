@@ -94,6 +94,11 @@ Deserialize a dataset
 class Example {
     static {
         mapper = new ObjectMapper();
+        
+        mapper.registerModule(new GuavaModule());
+        mapper.registerModule(new Jdk8Module());
+        mapper.registerModule(new JavaTimeModule());
+        
         mapper.registerModule(new JsonStatModule());
 
         Dataset.Builder builder = mapper.readValue("{ ... }", Dataset.Builder.class);

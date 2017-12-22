@@ -23,8 +23,8 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import no.ssb.jsonstat.JsonStatModule;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +33,7 @@ public class DimensionTest {
 
     private ObjectMapper mapper = new ObjectMapper();
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
         // TODO
         mapper.registerModule(new JsonStatModule());
@@ -58,10 +58,5 @@ public class DimensionTest {
         value = mapper.writeValueAsString(dimension);
 
         assertThat(value).isNotNull();
-    }
-
-    @Test(enabled = false)
-    public void testDeserialize() throws Exception {
-
     }
 }

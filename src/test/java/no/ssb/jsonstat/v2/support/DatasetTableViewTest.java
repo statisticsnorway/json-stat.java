@@ -25,8 +25,8 @@ import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
 import no.ssb.jsonstat.v2.Dataset;
 import no.ssb.jsonstat.v2.Dimension;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.List;
 import java.util.function.Function;
@@ -42,7 +42,7 @@ public class DatasetTableViewTest {
     private BiMap<String, Integer> hashCodes;
     private Dataset dataset;
 
-    @BeforeMethod
+    @Before
     public void setUp() throws Exception {
 
         hashCodes = HashBiMap.create(

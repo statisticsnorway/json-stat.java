@@ -19,6 +19,7 @@ package no.ssb.jsonstat.v2;
 
 import com.codepoetics.protonpack.StreamUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableCollection;
@@ -144,6 +145,7 @@ public abstract class Dataset extends JsonStat {
      *
      * @see <a href="https://json-stat.org/format/#size">json-stat.org/format/#extension</a>
      */
+    @JsonProperty("extension")
     abstract Object getExtension();
 
     /**
