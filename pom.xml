@@ -23,7 +23,7 @@
 
     <groupId>no.ssb.jsonstat</groupId>
     <artifactId>json-stat-java</artifactId>
-    <version>0.2.5-SNAPSHOT</version>
+    <version>0.2.6-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Json stat for Java</name>
