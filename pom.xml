@@ -61,6 +61,23 @@
     <profiles>
 
         <profile>
+            <!-- internal distribution for ssb -->
+            <id>ssb</id>
+            <distributionManagement>
+                <repository>
+                    <id>releases</id>
+                    <name>SSB Nexus Releases</name>
+                    <url>https://nexus.ssb.no/repository/maven-releases/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>snapshots</id>
+                    <name>SSB Snapshot Repository</name>
+                    <url>https://nexus.ssb.no/repository/maven-snapshots/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+
+        <profile>
             <id>oss</id>
             <build>
                 <plugins>
@@ -298,8 +315,8 @@ limitations under the License.
                 <version>3.1.1</version>
 
                 <configuration>
+                    <doclint>none</doclint>
                     <source>8</source>
-                    <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
                 <executions>
                     <execution>
