@@ -110,12 +110,12 @@
                 <repository>
                     <id>releases</id>
                     <name>SSB Nexus Releases</name>
-                    <url>https://nexus.ssb.no/repository/maven-releases/</url>
+                    <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-releases/</url>
                 </repository>
                 <snapshotRepository>
                     <id>snapshots</id>
                     <name>SSB Snapshot Repository</name>
-                    <url>https://nexus.ssb.no/repository/maven-snapshots/</url>
+                    <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-snapshots/</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
