@@ -105,7 +105,7 @@
 
         <profile>
             <!-- internal distribution for ssb -->
-            <id>ssb</id>
+            <id>ssb-bip</id>
             <repositories>
                 <repository>
                     <id>ssb-bip-releases</id>
@@ -267,6 +267,7 @@ limitations under the License.
                     </properties>
                     <excludes>
                         <exclude>**/README</exclude>
+                        <exclude>**/azure-pipelines.yml</exclude>
                         <exclude>src/main/java/no/ssb/jsonstat/v1/**</exclude>
                         <exclude>src/test/java/no/ssb/jsonstat/v1/**</exclude>
                         <exclude>src/main/resources/**</exclude>
