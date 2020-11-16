@@ -12,7 +12,7 @@ Status
 Usage
 =====
 
-Add json stat dependency into your project
+Add json stat dependency into your project:
 
 ````xml
 <dependency>
