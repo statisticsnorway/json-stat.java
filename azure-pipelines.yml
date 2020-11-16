@@ -35,8 +35,6 @@ variables:
   - name: MAVEN_OPTS
     value: '-Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)'
 
-
-
 # Job which runs mvn build, mvn install,
 jobs:
   - job: buildTest
