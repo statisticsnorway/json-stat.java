@@ -23,7 +23,7 @@
 
     <groupId>no.ssb.jsonstat</groupId>
     <artifactId>json-stat-java</artifactId>
-    <version>0.2.5</version>
+    <version>0.2.6</version>
     <packaging>jar</packaging>
 
     <name>Json stat for Java</name>
@@ -105,17 +105,26 @@
 
         <profile>
             <!-- internal distribution for ssb -->
-            <id>ssb</id>
+            <id>ssb-bip</id>
+            <repositories>
+                <repository>
+                    <id>ssb-bip-releases</id>
+                    <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-public/</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+            </repositories>
             <distributionManagement>
                 <repository>
-                    <id>releases</id>
+                    <id>ssb-bip-releases</id>
                     <name>SSB Nexus Releases</name>
-                    <url>https://nexus.ssb.no/repository/maven-releases/</url>
+                    <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-releases/</url>
                 </repository>
                 <snapshotRepository>
-                    <id>snapshots</id>
+                    <id>ssb-bip-snapshots</id>
                     <name>SSB Snapshot Repository</name>
-                    <url>https://nexus.ssb.no/repository/maven-snapshots/</url>
+                    <url>https://nexus.prod-bip-ci.ssb.no/repository/maven-snapshots/</url>
                 </snapshotRepository>
             </distributionManagement>
         </profile>
@@ -132,7 +141,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.9.10.1</version>
+            <version>2.9.10.4</version>
         </dependency>
 
         <dependency>
@@ -258,6 +267,7 @@ limitations under the License.
                     </properties>
                     <excludes>
                         <exclude>**/README</exclude>
+                        <exclude>**/azure-pipelines.yml</exclude>
                         <exclude>src/main/java/no/ssb/jsonstat/v1/**</exclude>
                         <exclude>src/test/java/no/ssb/jsonstat/v1/**</exclude>
                         <exclude>src/main/resources/**</exclude>
