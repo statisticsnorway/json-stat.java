@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -45,12 +46,13 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class DatasetTest {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
 
         mapper.registerModule(new JsonStatModule());
+        mapper.registerModule(new JavaTimeModule());
         mapper.registerModule(new Jdk8Module().configureAbsentsAsNulls(true));
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         mapper.registerModule(new GuavaModule().configureAbsentsAsNulls(false));
