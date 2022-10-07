@@ -28,6 +28,7 @@ class Example {
     static {
         mapper = new ObjectMapper();
         mapper.registerModule(new JsonStatModule());
+        mapper.registerModule(new JavaTimeModule());
     }
 }
 ````
