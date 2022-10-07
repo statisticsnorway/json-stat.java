@@ -1,4 +1,4 @@
-The MIT License
+# The MIT License
 
 Copyright 2022 Statistisk sentralbyrå - Statistics Norway
 
