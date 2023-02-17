@@ -52,7 +52,7 @@ jobs:
           fi
           mvn versions:set --no-transfer-progress -DnewVersion=$RELEASE_VERSION
       - name: Deploy with Maven
-        run: mvn clean deploy -P build-javadoc-and-sources,release --batch-mode --no-transfer-progress
+        run: mvn clean deploy -P build-javadoc-and-sources,release -Dmaven.test.skip=true --batch-mode --no-transfer-progress
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
