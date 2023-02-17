@@ -45,10 +45,11 @@ jobs:
       - name: Resolve version
         run: |
           if [[ $GITHUB_REF == *"tags"* ]]; then
-            RELEASE_VERSION=${GITHUB_REF#refs/tags/}
+            export RELEASE_VERSION=${GITHUB_REF#refs/tags/}
           else
-            RELEASE_VERSION=${GITHUB_REF#refs/heads/}-SNAPSHOT
+            export RELEASE_VERSION=${GITHUB_REF#refs/heads/}-SNAPSHOT
           fi
+          echo "Resolved version: $RELEASE_VERSION"
       - name: Set version with Maven
         run: mvn versions:set --no-transfer-progress -DnewVersion=$RELEASE_VERSION
 #      - name: Deploy with Maven
