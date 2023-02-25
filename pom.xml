@@ -22,6 +22,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <developers>
+        <developer>
+            <name>John Kasper Svergja</name>
+            <email>johnkasper.svergja@ssb.no</email>
+        </developer>
+    </developers>
+
     <licenses>
         <license>
             <name>The MIT License</name>
