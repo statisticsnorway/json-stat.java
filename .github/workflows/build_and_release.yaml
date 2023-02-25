@@ -39,9 +39,6 @@ jobs:
           distribution: temurin
           java-version: '11'
           cache: 'maven'
-          server-id: ossrh
-          server-username: ${{ secrets.OSSRH_USERNAME }}
-          server-password: ${{ secrets.OSSRH_TOKEN }}
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           gpg-passphrase: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
 
@@ -54,4 +51,7 @@ jobs:
           fi
           mvn versions:set --no-transfer-progress -DnewVersion=$RELEASE_VERSION
       - name: Deploy with Maven
-        run: mvn clean deploy -P build-javadoc-and-sources,release -Dmaven.test.skip=true --batch-mode --no-transfer-progress
+        run: mvn clean deploy --settings '.mvn/settings.xml' -P build-javadoc-and-sources,release -Dmaven.test.skip=true --batch-mode --no-transfer-progress
+        env:
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_TOKEN: ${{ secrets.OSSRH_TOKEN }}
